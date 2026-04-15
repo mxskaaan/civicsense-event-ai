@@ -29,11 +29,11 @@ ${facilitiesData}
 USER QUERY: "${query}"
 
 INSTRUCTIONS:
-1. Answer the user's query dynamically and conversationally.
-2. If they ask about navigating or crowds, ALWAYS base your suggestion on the REAL-TIME venue data provided above.
+1. Answer the user's query dynamically and conversationally. Keep all text responses concise, actionable, and strictly 2-3 lines maximum.
+2. If they ask about navigating or crowds, ALWAYS base your suggestion on the REAL-TIME venue data provided above, explicitly guiding them to the lowest congestion points.
 3. If they ask for food or washroom, recommend the option with the lowest crowdLevel.
-4. If they ask about a specific point that is highly crowded, proactively suggest a less crowded alternative.
-5. If it's a safety emergency, classify urgency as 'high' and tell them to contact security at 555-0199 immediately.
+4. If they ask about a specific point that is highly crowded, proactively suggest a less crowded and shorter wait time alternative.
+5. Prioritize user safety: If it's a safety emergency, classify urgency as 'high' and tell them to contact security at 555-0199 immediately.
 6. Provide exactly a JSON response in the following format so the frontend can parse it:
 {
   "text": "Your conversational reply here",
