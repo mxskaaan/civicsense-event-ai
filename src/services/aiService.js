@@ -1,84 +1,201 @@
-export const processQuery = async (query, { gates, facilities }, apiKey) => {
-  if (!apiKey) {
-    return {
-      text: "⚠️ Please enter a valid API key.",
-      urgency: "high",
-      action: "error"
-    };
-  }
+import { useState, useEffect, useRef } from "react";
+import { Send, Bot } from "lucide-react";
+import { useSimulation } from "../context/SimulationContext";
+import { processQuery } from "../services/aiService";
 
-  try {
-    const prompt = `
-You are a smart stadium assistant.
+export const ChatInterface = () => {
+  const { gates, facilities } = useSimulation();
 
-Live Gate Data:
-${gates.map(g => `${g.name}: ${g.crowdLevel}%`).join('\n')}
-
-User Query:
-${query}
-
-Rules:
-- Suggest lowest crowd gate
-- Keep answer short (2 lines max)
-- Prioritize safety
-
-Return JSON:
-{
-"text": "...",
-"urgency": "low | medium | high",
-"action": "navigate | safety | general"
-}
-`;
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [{ text: prompt }]
-            }
-          ]
-        })
-      }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error("API failed");
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      type: "assistant",
+      text: "Hello! I am your CivicSense AI. I analyze live venue data to guide you smartly. Ask me anything!"
     }
+  ]);
 
-    let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef(null);
 
-    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+  const apiKey = localStorage.getItem("gemini_api_key");
 
-    try {
-      return JSON.parse(text);
-    } catch {
-      return {
-        text: text || "Use the least crowded gate.",
-        urgency: "low",
-        action: "general"
-      };
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // 🚨 Auto alert
+  useEffect(() => {
+    const highGate = gates.find(g => g.crowdLevel > 85);
+
+    if (highGate) {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now(),
+          type: "assistant",
+          text: `⚠️ High congestion at ${highGate.name} (${highGate.crowdLevel}%). Avoid this gate.`,
+          urgency: "high"
+        }
+      ]);
     }
+  }, [gates]);
 
-  } catch (error) {
-    console.error("Gemini Error:", error);
+  const handleSend = async () => {
+    if (!input.trim()) return;
 
-    // 🔥 IMPORTANT FALLBACK (THIS SAVES YOUR DEMO)
-    const bestGate = gates.reduce((min, g) =>
-      g.crowdLevel < min.crowdLevel ? g : min
-    );
+    const userMsg = { id: Date.now(), type: "user", text: input };
+    setMessages(prev => [...prev, userMsg]);
+    setInput("");
+    setIsTyping(true);
 
-    return {
-      text: `Use ${bestGate.name} — lowest crowd (${bestGate.crowdLevel}%). Fastest entry.`,
-      urgency: bestGate.crowdLevel > 80 ? "high" : "low",
-      action: "navigate"
-    };
-  }
+    const res = await processQuery(input, { gates, facilities }, apiKey);
+
+    setMessages(prev => [...prev, {
+      id: Date.now() + 1,
+      type: "assistant",
+      text: res.text,
+      urgency: res.urgency
+    }]);
+
+    setIsTyping(false);
+  };
+
+  const handleBestGate = async () => {
+    const query = "Suggest best gate";
+
+    setMessages(prev => [...prev, {
+      id: Date.now(),
+      type: "user",
+      text: query
+    }]);
+
+    setIsTyping(true);
+
+    const res = await processQuery(query, { gates, facilities }, apiKey);
+
+    setMessages(prev => [...prev, {
+      id: Date.now() + 1,
+      type: "assistant",
+      text: res.text,
+      urgency: res.urgency
+    }]);
+
+    setIsTyping(false);
+  };
+
+  return (
+    <div style={{
+      background: "rgba(255,255,255,0.03)",
+      backdropFilter: "blur(12px)",
+      borderRadius: "16px",
+      padding: "16px",
+      border: "1px solid rgba(255,255,255,0.08)",
+      display: "flex",
+      flexDirection: "column",
+      height: "100%"
+    }}>
+
+      {/* HEADER */}
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        marginBottom: "12px"
+      }}>
+        <Bot color="#00FFB2" />
+        <div>
+          <h3 style={{ margin: 0 }}>CivicSense AI</h3>
+          <span style={{ color: "#00FFB2", fontSize: "0.8rem" }}>
+            ● Live Assistant
+          </span>
+        </div>
+      </div>
+
+      {/* CHAT AREA */}
+      <div style={{
+        flex: 1,
+        overflowY: "auto",
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px"
+      }}>
+        {messages.map(msg => (
+          <div key={msg.id} style={{
+            alignSelf: msg.type === "user" ? "flex-end" : "flex-start",
+            maxWidth: "75%"
+          }}>
+            <div style={{
+              background: msg.type === "user"
+                ? "linear-gradient(135deg,#6C63FF,#4f46e5)"
+                : "rgba(255,255,255,0.06)",
+              padding: "10px 14px",
+              borderRadius: "14px",
+              border: msg.urgency === "high" ? "1px solid red" : "none",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.2)"
+            }}>
+              {msg.text}
+            </div>
+          </div>
+        ))}
+
+        {isTyping && (
+          <div style={{ fontSize: "0.8rem", color: "#00FFB2" }}>
+            🤖 AI analyzing...
+          </div>
+        )}
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* BUTTON */}
+      <button
+        onClick={handleBestGate}
+        style={{
+          background: "linear-gradient(135deg,#00FFB2,#00C9FF)",
+          padding: "8px 12px",
+          borderRadius: "10px",
+          border: "none",
+          fontSize: "0.85rem",
+          fontWeight: "600",
+          margin: "10px 0",
+          cursor: "pointer",
+          width: "fit-content"
+        }}
+      >
+        ⚡ Best Gate
+      </button>
+
+      {/* INPUT */}
+      <div style={{
+        display: "flex",
+        gap: "8px"
+      }}>
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          placeholder="Ask about crowd, gates..."
+          style={{
+            flex: 1,
+            padding: "10px",
+            borderRadius: "12px",
+            border: "1px solid rgba(255,255,255,0.1)",
+            background: "rgba(255,255,255,0.04)",
+            color: "white",
+            outline: "none"
+          }}
+        />
+
+        <button onClick={handleSend}>
+          <Send size={18} />
+        </button>
+      </div>
+
+    </div>
+  );
 };
