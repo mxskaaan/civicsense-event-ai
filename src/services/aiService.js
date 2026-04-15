@@ -28,7 +28,7 @@ export const ChatInterface = () => {
     scrollToBottom();
   }, [messages]);
 
-  // 🚨 Auto Alert
+  // 🚨 Auto alert
   useEffect(() => {
     const highGate = gates.find(g => g.crowdLevel > 85);
 
@@ -196,9 +196,16 @@ export const ChatInterface = () => {
         <button
           onClick={handleSend}
           style={{
-            background: "transparent",
+            background: "rgba(255,255,255,0.06)",  // 🔥 FIXED
             border: "none",
-            cursor: "pointer"
+            outline: "none",
+            boxShadow: "none",
+            borderRadius: "8px",
+            padding: "6px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
           <Send size={18} color="#00FFB2" />
