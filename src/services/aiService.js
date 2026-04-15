@@ -28,7 +28,7 @@ export const ChatInterface = () => {
     scrollToBottom();
   }, [messages]);
 
-  // 🚨 Auto alert
+  // 🚨 Auto congestion alert
   useEffect(() => {
     const highGate = gates.find(g => g.crowdLevel > 85);
 
@@ -55,12 +55,15 @@ export const ChatInterface = () => {
 
     const res = await processQuery(input, { gates, facilities }, apiKey);
 
-    setMessages(prev => [...prev, {
-      id: Date.now() + 1,
-      type: "assistant",
-      text: res.text,
-      urgency: res.urgency
-    }]);
+    setMessages(prev => [
+      ...prev,
+      {
+        id: Date.now() + 1,
+        type: "assistant",
+        text: res.text,
+        urgency: res.urgency
+      }
+    ]);
 
     setIsTyping(false);
   };
@@ -68,45 +71,43 @@ export const ChatInterface = () => {
   const handleBestGate = async () => {
     const query = "Suggest best gate";
 
-    setMessages(prev => [...prev, {
-      id: Date.now(),
-      type: "user",
-      text: query
-    }]);
+    setMessages(prev => [
+      ...prev,
+      { id: Date.now(), type: "user", text: query }
+    ]);
 
     setIsTyping(true);
 
     const res = await processQuery(query, { gates, facilities }, apiKey);
 
-    setMessages(prev => [...prev, {
-      id: Date.now() + 1,
-      type: "assistant",
-      text: res.text,
-      urgency: res.urgency
-    }]);
+    setMessages(prev => [
+      ...prev,
+      {
+        id: Date.now() + 1,
+        type: "assistant",
+        text: res.text,
+        urgency: res.urgency
+      }
+    ]);
 
     setIsTyping(false);
   };
 
   return (
-    <div style={{
-      background: "rgba(255,255,255,0.03)",
-      backdropFilter: "blur(12px)",
-      borderRadius: "16px",
-      padding: "16px",
-      border: "1px solid rgba(255,255,255,0.08)",
-      display: "flex",
-      flexDirection: "column",
-      height: "100%"
-    }}>
-
-      {/* HEADER */}
-      <div style={{
+    <div
+      style={{
+        background: "rgba(255,255,255,0.03)",
+        backdropFilter: "blur(12px)",
+        borderRadius: "16px",
+        padding: "16px",
+        border: "1px solid rgba(255,255,255,0.08)",
         display: "flex",
-        alignItems: "center",
-        gap: "10px",
-        marginBottom: "12px"
-      }}>
+        flexDirection: "column",
+        height: "100%"
+      }}
+    >
+      {/* HEADER */}
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
         <Bot color="#00FFB2" />
         <div>
           <h3 style={{ margin: 0 }}>CivicSense AI</h3>
@@ -116,28 +117,37 @@ export const ChatInterface = () => {
         </div>
       </div>
 
-      {/* CHAT */}
-      <div style={{
-        flex: 1,
-        overflowY: "auto",
-        display: "flex",
-        flexDirection: "column",
-        gap: "8px"
-      }}>
+      {/* CHAT AREA */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px"
+        }}
+      >
         {messages.map(msg => (
-          <div key={msg.id} style={{
-            alignSelf: msg.type === "user" ? "flex-end" : "flex-start",
-            maxWidth: "75%"
-          }}>
-            <div style={{
-              background: msg.type === "user"
-                ? "linear-gradient(135deg,#6C63FF,#4f46e5)"
-                : "rgba(255,255,255,0.06)",
-              padding: "10px 14px",
-              borderRadius: "14px",
-              border: msg.urgency === "high" ? "1px solid red" : "none",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.2)"
-            }}>
+          <div
+            key={msg.id}
+            style={{
+              alignSelf: msg.type === "user" ? "flex-end" : "flex-start",
+              maxWidth: "75%"
+            }}
+          >
+            <div
+              style={{
+                background:
+                  msg.type === "user"
+                    ? "linear-gradient(135deg,#6C63FF,#4f46e5)"
+                    : "rgba(255,255,255,0.06)",
+                padding: "10px 14px",
+                borderRadius: "14px",
+                border: msg.urgency === "high" ? "1px solid red" : "none",
+                color: "white",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.2)"
+              }}
+            >
               {msg.text}
             </div>
           </div>
@@ -152,7 +162,7 @@ export const ChatInterface = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* BUTTON */}
+      {/* SMART BUTTON */}
       <button
         onClick={handleBestGate}
         style={{
@@ -171,32 +181,35 @@ export const ChatInterface = () => {
       </button>
 
       {/* INPUT BAR */}
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        background: "rgba(255,255,255,0.05)",
-        borderRadius: "12px",
-        padding: "6px 8px"
-      }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          background: "rgba(255,255,255,0.06)", // 🔥 DARK FIX
+          borderRadius: "12px",
+          padding: "6px 8px"
+        }}
+      >
         <input
           value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && handleSend()}
           placeholder="Ask about crowd, gates..."
           style={{
             flex: 1,
             padding: "8px",
             border: "none",
-            background: "transparent",
+            outline: "none",
+            background: "transparent", // 🔥 CRITICAL FIX
             color: "white",
-            outline: "none"
+            fontSize: "0.9rem"
           }}
         />
 
         <button
           onClick={handleSend}
           style={{
-            background: "rgba(255,255,255,0.06)",  // 🔥 FIXED
+            background: "rgba(255,255,255,0.08)", // 🔥 NO WHITE
             border: "none",
             outline: "none",
             boxShadow: "none",
@@ -211,7 +224,6 @@ export const ChatInterface = () => {
           <Send size={18} color="#00FFB2" />
         </button>
       </div>
-
     </div>
   );
 };
