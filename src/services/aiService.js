@@ -28,7 +28,7 @@ export const ChatInterface = () => {
     scrollToBottom();
   }, [messages]);
 
-  // 🚨 Auto alert
+  // 🚨 Auto Alert
   useEffect(() => {
     const highGate = gates.find(g => g.crowdLevel > 85);
 
@@ -116,7 +116,7 @@ export const ChatInterface = () => {
         </div>
       </div>
 
-      {/* CHAT AREA */}
+      {/* CHAT */}
       <div style={{
         flex: 1,
         overflowY: "auto",
@@ -157,23 +157,26 @@ export const ChatInterface = () => {
         onClick={handleBestGate}
         style={{
           background: "linear-gradient(135deg,#00FFB2,#00C9FF)",
-          padding: "8px 12px",
-          borderRadius: "10px",
+          padding: "6px 12px",
+          borderRadius: "8px",
           border: "none",
-          fontSize: "0.85rem",
+          fontSize: "0.8rem",
           fontWeight: "600",
-          margin: "10px 0",
+          margin: "8px 0",
           cursor: "pointer",
           width: "fit-content"
         }}
       >
-        ⚡ Best Gate
+        ⚡ Suggest Best Gate
       </button>
 
-      {/* INPUT */}
+      {/* INPUT BAR */}
       <div style={{
         display: "flex",
-        gap: "8px"
+        alignItems: "center",
+        background: "rgba(255,255,255,0.05)",
+        borderRadius: "12px",
+        padding: "6px 8px"
       }}>
         <input
           value={input}
@@ -182,17 +185,23 @@ export const ChatInterface = () => {
           placeholder="Ask about crowd, gates..."
           style={{
             flex: 1,
-            padding: "10px",
-            borderRadius: "12px",
-            border: "1px solid rgba(255,255,255,0.1)",
-            background: "rgba(255,255,255,0.04)",
+            padding: "8px",
+            border: "none",
+            background: "transparent",
             color: "white",
             outline: "none"
           }}
         />
 
-        <button onClick={handleSend}>
-          <Send size={18} />
+        <button
+          onClick={handleSend}
+          style={{
+            background: "transparent",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
+          <Send size={18} color="#00FFB2" />
         </button>
       </div>
 
