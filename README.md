@@ -1,16 +1,122 @@
-# React + Vite
+# 🚀 CivicSense Event AI Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 🧠 AI-powered assistant to improve crowd experience at large-scale events
 
-Currently, two official plugins are available:
+🌐 Live Demo: https://civicsense-event-ai.vercel.app/
+💻 GitHub: https://github.com/mxskaaan/civicsense-event-ai
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🌍 The Problem
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Large-scale events like stadiums and concerts often suffer from:
 
-## Expanding the ESLint configuration
+* 🚶 Overcrowded entry/exit points
+* ⏳ Long waiting times
+* ❓ Confusion in navigation
+* 🚨 Safety risks due to poor coordination
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Most systems are reactive — not intelligent.
+
+---
+
+## 💡 The Solution
+
+**CivicSense Event AI Assistant** acts as a **real-time digital guide** that:
+
+* Understands user queries using AI
+* Analyzes crowd distribution
+* Suggests optimal actions instantly
+
+👉 Example:
+
+> “Gate 1 is crowded → Use Gate 3 instead”
+
+---
+
+## ✨ Key Features
+
+### 🤖 AI-Powered Assistant
+
+* Understands natural language queries
+* Provides intelligent, context-aware responses
+
+### 📊 Live Crowd Simulation
+
+* Displays real-time crowd levels
+* Helps users make informed decisions
+
+### 🧭 Smart Navigation
+
+* Suggests less crowded routes
+* Recommends nearest facilities
+
+### ⚡ Real-Time Interaction
+
+* Instant feedback via chat interface
+
+---
+
+## 🧠 How It Works
+
+1. User enters a query
+2. AI analyzes intent
+3. System checks simulated crowd data
+4. Returns optimized recommendation
+
+---
+
+## 🖼️ Screenshots
+
+### 🏟️ Dashboard
+
+![Dashboard](./assets/dashboard.png)
+
+### 🤖 AI Chat
+
+![Chat](./assets/chat.png)
+
+---
+
+## 🛠️ Tech Stack
+
+* ⚛️ React (Vite)
+* 🤖 Google Gemini (via Antigravity)
+* ☁️ Google Cloud Run
+* 🚀 Vercel (Frontend Hosting)
+
+---
+
+## 🚀 Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## 🎯 Impact
+
+* ⏱️ Reduces waiting time
+* 🚶 Improves crowd movement
+* 🛡️ Enhances safety
+* 🎉 Better event experience
+
+---
+
+## 🔮 Future Scope
+
+* Real-time sensor integration
+* Voice-based assistant
+* Multi-language support
+
+---
+
+## 🙌 Built For
+
+**PromptWars: Virtual – Google for Developers**
+
+---
+
+## ⭐ If you like this project, give it a star!
