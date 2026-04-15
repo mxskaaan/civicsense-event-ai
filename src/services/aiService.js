@@ -9,7 +9,7 @@ export const processQuery = async (query, { gates, facilities }, apiKey) => {
 
   try {
     const prompt = `
-You are a smart stadium assistant.
+You are a smart, dynamic stadium AI assistant.
 
 Live Gate Data:
 ${gates.map(g => `${g.name}: ${g.crowdLevel}%`).join('\n')}
@@ -18,15 +18,17 @@ User Query:
 ${query}
 
 Rules:
-- Suggest lowest crowd gate
-- Keep answer short (2 lines max)
-- Prioritize safety
+1. Direct Answer: Respond directly to the User Query.
+2. Contextual Logic: If they ask why not a specific gate, explain based on its crowd level compared to the others. 
+3. Best Gate: If they ask for suggestion, recommend the gate with the absolute lowest crowd level.
+4. Keep answer short and conversational (1-2 sentences max).
+5. Prioritize safety and crowd distribution.
 
-Return JSON:
+Return strictly JSON:
 {
-"text": "...",
-"urgency": "low | medium | high",
-"action": "navigate | safety | general"
+"text": "Your conversational reply here",
+"urgency": "low" | "medium" | "high",
+"action": "navigate" | "safety" | "general"
 }
 `;
 
