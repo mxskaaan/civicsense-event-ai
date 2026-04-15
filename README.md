@@ -1,122 +1,118 @@
-# 🚀 CivicSense Event AI Assistant
+# 🏟️ CivicSense Event AI Assistant
 
-> 🧠 AI-powered assistant to improve crowd experience at large-scale events
+### Improving Physical Event Experience through AI-Driven Crowd Intelligence
 
-🌐 Live Demo: https://civicsense-event-ai.vercel.app/
-💻 GitHub: https://github.com/mxskaaan/civicsense-event-ai
+CivicSense Event AI Assistant is a smart, context-aware system designed to enhance attendee experience at large-scale sporting venues.
 
----
-
-## 🌍 The Problem
-
-Large-scale events like stadiums and concerts often suffer from:
-
-* 🚶 Overcrowded entry/exit points
-* ⏳ Long waiting times
-* ❓ Confusion in navigation
-* 🚨 Safety risks due to poor coordination
-
-Most systems are reactive — not intelligent.
+Built as part of **PromptWars: Virtual by Google for Developers**, this project focuses on **crowd management, real-time navigation, and intelligent decision-making using AI**.
 
 ---
 
-## 💡 The Solution
+## 🌐 Live Demo
 
-**CivicSense Event AI Assistant** acts as a **real-time digital guide** that:
+👉 https://civicsense-event-ai.vercel.app/
 
-* Understands user queries using AI
-* Analyzes crowd distribution
-* Suggests optimal actions instantly
+## 💻 GitHub Repository
 
-👉 Example:
-
-> “Gate 1 is crowded → Use Gate 3 instead”
+👉 https://github.com/mxskaaan/civicsense-event-ai
 
 ---
 
-## ✨ Key Features
+## 🧭 Chosen Vertical
 
-### 🤖 AI-Powered Assistant
+**Physical Event Experience**
 
-* Understands natural language queries
-* Provides intelligent, context-aware responses
+This solution addresses key challenges in large-scale events:
 
-### 📊 Live Crowd Simulation
-
-* Displays real-time crowd levels
-* Helps users make informed decisions
-
-### 🧭 Smart Navigation
-
-* Suggests less crowded routes
-* Recommends nearest facilities
-
-### ⚡ Real-Time Interaction
-
-* Instant feedback via chat interface
+* 🚶 Crowd movement optimization
+* ⏳ Reducing waiting times
+* 📍 Real-time navigation assistance
+* 🚨 Improving safety and coordination
 
 ---
 
-## 🧠 How It Works
+## 🚀 Key Innovation: Context-Aware AI Intelligence
 
-1. User enters a query
-2. AI analyzes intent
-3. System checks simulated crowd data
-4. Returns optimized recommendation
+Unlike static dashboards or rule-based systems, CivicSense uses **Google Gemini 1.5 Flash** to provide intelligent, real-time assistance.
 
----
+The system:
 
-## 🖼️ Screenshots
-
-### 🏟️ Dashboard
-
-![Dashboard](./assets/dashboard.png)
-
-### 🤖 AI Chat
-
-![Chat](./assets/chat.png)
+* Understands user queries in natural language
+* Analyzes live crowd data (simulated)
+* Generates logical, data-driven recommendations
 
 ---
 
-## 🛠️ Tech Stack
+## ⚡ How It Works
+
+1. User enters a query (e.g., *"Which gate is less crowded?"*)
+2. AI analyzes the intent using Gemini
+3. System evaluates live crowd data
+4. Generates a smart recommendation with reasoning
+
+---
+
+## 🤖 AI Integration Details
+
+### 🔹 Model Used
+
+* **Google Gemini 1.5 Flash** *(via Google AI Studio / Antigravity)*
+
+### 🔹 How AI Works
+
+* Processes user queries
+* Identifies intent (crowd, navigation, facilities)
+* Uses live gate data to make decisions
+* Compares multiple options before suggesting
+
+---
+
+## 🛠️ Architecture (Modular Design)
+
+### Core Components:
+
+* **AI Service Layer (`services/aiService.js`)**
+* **State Management (`context/`)**
+* **UI Components (`components/`)**
+* **Simulation Engine**
+
+---
+
+## ⚙️ Tech Stack
 
 * ⚛️ React (Vite)
-* 🤖 Google Gemini (via Antigravity)
-* ☁️ Google Cloud Run
-* 🚀 Vercel (Frontend Hosting)
+* 🤖 Google Gemini 1.5 Flash
+* ☁️ Google Cloud Run / Vercel
+* 🧠 Google Antigravity
 
 ---
 
-## 🚀 Run Locally
+## 📊 Key Features
 
-```bash
-npm install
-npm run dev
-```
+* 🤖 AI-powered assistant
+* 📈 Live crowd monitoring
+* 🧭 Smart navigation suggestions
+* 🏟️ Facility guidance
+* 🚨 Safety-aware recommendations
+
+---
+
+## 🔐 Security
+
+API keys are handled securely and are not exposed in the public repository.
 
 ---
 
 ## 🎯 Impact
 
 * ⏱️ Reduces waiting time
-* 🚶 Improves crowd movement
-* 🛡️ Enhances safety
-* 🎉 Better event experience
+* 🚶 Improves crowd distribution
+* 🛡️ Enhances attendee safety
+* 🎉 Improves overall event experience
 
 ---
 
-## 🔮 Future Scope
+## 🙌 Acknowledgement
 
-* Real-time sensor integration
-* Voice-based assistant
-* Multi-language support
-
----
-
-## 🙌 Built For
-
+Developed using **Google Antigravity** for
 **PromptWars: Virtual – Google for Developers**
-
----
-
-## ⭐ If you like this project, give it a star!
