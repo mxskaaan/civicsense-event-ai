@@ -45,26 +45,26 @@ IMPORTANT: Do NOT output any markdown blocks like \`\`\`json. Output ONLY the ra
 
     const result = await model.generateContent(prompt);
     let output = result.response.text().trim();
-    
+
     // Clean markdown if present
     if (output.startsWith('```json')) {
-       output = output.replace(/^```json\n?/, '');
-       output = output.replace(/\n?```$/, '');
+      output = output.replace(/^```json\n?/, '');
+      output = output.replace(/\n?```$/, '');
     } else if (output.startsWith('```')) {
-       output = output.replace(/^```\n?/, '');
-       output = output.replace(/\n?```$/, '');
+      output = output.replace(/^```\n?/, '');
+      output = output.replace(/\n?```$/, '');
     }
-    
+
     try {
-       const parsed = JSON.parse(output);
-       return parsed;
+      const parsed = JSON.parse(output);
+      return parsed;
     } catch (e) {
-       console.error("Failed to parse Gemini output:", output);
-       return {
-         text: output,
-         action: 'general',
-         urgency: 'low'
-       };
+      console.error("Failed to parse Gemini output:", output);
+      return {
+        text: output,
+        action: 'general',
+        urgency: 'low'
+      };
     }
   } catch (error) {
     console.error("Gemini API Error:", error);
